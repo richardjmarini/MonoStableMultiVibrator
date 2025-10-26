@@ -1,0 +1,19 @@
+* Smoothed polyfuse subcircuit
+* Node 1 = positive, Node 2 = negative
+* Parameters: Rhold, Rtrip, Itrip, S (slope of transition)
+.subckt polyfuse 1 2 params: Rhold=0.05 Rtrip=10 Itrip=0.1 S=50
+
+* Dummy zero-volt source to measure current
+Pr 1 2 0
+
+* Current through the dummy source
+Imeas 0 n_meas VALUE={I(Pr)}
+
+* Voltage-controlled voltage source to implement smooth resistance
+Bres 1 2 V = I(Pr) * (Rhold + (Rtrip - Rhold)/(1 + exp(-S*(I(Pr)-Itrip))))
+
+* Optional: tiny series resistor for convergence
+Rs 1 2 1u
+
+.ends polyfuse
+

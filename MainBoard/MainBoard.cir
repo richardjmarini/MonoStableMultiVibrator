@@ -1,0 +1,68 @@
+.title KiCad schematic
+.include "models/TL072.lib"
+.model __D8 D
+.model __D7 D
+.model __D5 D
+.model __D4 D
+.model __D1 D
+.model __D6 D
+.save all
+.probe alli
+.probe p(XU1)
+.probe p(C3)
+.probe p(C1)
+.probe p(C5)
+.probe p(C4)
+.probe p(R5)
+.probe p(D8)
+.probe p(D7)
+.probe p(V1)
+.probe p(R3)
+.probe p(D5)
+.probe p(D4)
+.probe p(R4)
+.probe p(D1)
+.probe p(R1)
+.probe p(C2)
+.probe p(R2)
+.probe p(C8)
+.probe p(D6)
+.probe p(R0)
+.probe p(V3)
+.probe p(V2)
+.options method=gear 
+.options gmin=1e-9 cshunt=1e-12 
+.options reltol=1e-2 abstol=1e-9 vntol=1e-6 
+.options itl1=300 itl4=300 
+.options maxstep=100p
+.options temp=60
+.tran 10us 25us
+.control
+run
+plot v(Gate) v(Output) V(Net-_D1-K_) V(Net-_D1-A_) v(Net-_D6-A_)
+plot i(R0) i(R1) i(R2) i(R3) i(C2) i(C8) i(D1) i(D6)
+.endc
+
+XU1 Net-_D4-K_ Net-_D6-A_ Net-_D1-A_ -v Net-_D7-A_ Net-_U1-2IN-_ Net-_U1-2IN-_ TL074c
+C3 GND -v 10u
+C1 +v GND 10u
+C5 GND -v 0.1u
+C4 +v GND 0.1u
+R5 Gate Net-_D7-A_ 1k
+D8 -v Net-_D7-A_ __D8
+D7 Net-_D7-A_ +v __D7
+V1 Gate GND PULSE( 0 5 50n 50n 50n 5us 10us 1 ) 
+R3 GND Net-_D1-K_ 1k
+D5 Net-_D4-K_ +v __D5
+D4 GND Net-_D4-K_ __D4
+R4 Output Net-_D4-K_ 1k
+D1 Net-_D1-A_ Net-_D1-K_ __D1
+R1 Net-_D1-A_ GND 30k
+C2 Net-_D1-K_ Net-_U1-2IN-_ 0.1u
+R2 Net-_D4-K_ Net-_D1-A_ 30k
+C8 Net-_D6-A_ GND 1u
+D6 Net-_D6-A_ GND __D6
+R0 Net-_D4-K_ Net-_D6-A_ 30k
+V3 -v GND DC -12 
+V2 +v GND DC 12 
+.end

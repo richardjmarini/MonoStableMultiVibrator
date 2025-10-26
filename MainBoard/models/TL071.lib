@@ -1,0 +1,49 @@
+* TL071 Operational Amplifier Macromodel (ngspice-compatible)
+* Based on TI macromodel, adapted from PSpice 4.01 syntax
+
+* Node order: 1 = Non-inverting input
+*             2 = Inverting input
+*             3 = Positive supply
+*             4 = Negative supply
+*             5 = Output
+.SUBCKT TL071 1 2 3 4 5
+
+C1   11 12 3.498p
+C2    6  7 15p
+DC    5 53 DX
+DE   54  5 DX
+DLP  90 91 DX
+DLN  92 90 DX
+DP    4  3 DX
+
+* Original: EGND 99 0 POLY(2) (3,0) (4,0) 0 .5 .5
+E_GND 99 0 VALUE = { 0.5*V(3,0) + 0.5*V(4,0) }
+
+* Original: FB 7 99 POLY(5) VB VC VE VLP VLN 0 4.715E6 -5E6 5E6 5E6 -5E6
+E_FB 7 99 VALUE = { 4.715e6*V(VB) - 5e6*V(VC) + 5e6*V(VE) + 5e6*V(VLP) - 5e6*V(VLN) }
+
+GA    6  0 11 12 282.8u
+GCM   0  6 10 99 8.942n
+ISS   3 10 DC 195u
+HLIM 90  0 VLIM 1K
+J1   11  2 10 JX
+J2   12  1 10 JX
+R2    6  9 100k
+RD1   4 11 3.536k
+RD2   4 12 3.536k
+RO1   8  5 150
+RO2   7 99 150
+RP    3  4 2.143k
+RSS  10 99 1.026M
+VB    9  0 DC 0
+VC    3 53 DC 2.200
+VE   54  4 DC 2.200
+VLIM  7  8 DC 0
+VLP  91  0 DC 25
+VLN   0 92 DC 25
+
+.MODEL DX D(IS=800.0E-18)
+.MODEL JX PJF(IS=15.00E-12 BETA=270.1E-6 VTO=-1)
+
+.ENDS
+
