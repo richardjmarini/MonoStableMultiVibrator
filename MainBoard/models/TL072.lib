@@ -1,6 +1,6 @@
 * TL072 Dual Op-Amp Subcircuit for ngspice
-.subckt TL0742 1out 1in- 1in+ vcc- 2in+ 2in- 2out vcc+
 .include TL071.lib
+.subckt TL072 1out 1in- 1in+ vcc- 2in+ 2in- 2out vcc+
 XU1A 1in+ 1in- vcc+ vcc- 1out TL071
 XU1B 2in+ 2in- vcc+ vcc- 2out TL071
 .ends

@@ -5842,7 +5842,7 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Name" "TL074c"
+		(property "Sim.Name" "TL072"
 			(at 154.94 33.02 0)
 			(effects
 				(font
